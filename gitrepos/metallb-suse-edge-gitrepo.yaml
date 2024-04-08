@@ -4,7 +4,7 @@ metadata:
   name: metallb-suse-edge
   namespace: fleet-local
 spec:
-  repo: https://github.com/suse-edge/misc.git
+  repo: https://github.com/suse-edge/fleet-examples.git
   branch: main
   paths:
-  - fleet-examples/fleets/metallb/
+  - fleets/metallb/
