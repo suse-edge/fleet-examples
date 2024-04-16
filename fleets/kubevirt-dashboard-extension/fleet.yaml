@@ -1,0 +1,6 @@
+defaultNamespace: cattle-ui-plugin-system
+helm:
+  releaseName: kubevirt-dashboard-extension # This needs to be set otherwise the uiplugin won't work
+  chart: "kubevirt-dashboard-extension"
+  repo: "https://suse-edge.github.io/charts"
+  version: "1.0.0"
