@@ -26,5 +26,20 @@ helm:
   timeoutSeconds: 0
 
   # Custom values that will be passed as values.yaml to the installation
-  values: {}
+  # See https://github.com/suse-edge/charts/blob/main/charts/akri/0.10.4/questions.yml for more information on the values
+  values:
+    kubernetesDistro: "k3s" # Use 'k3s' for rke2/k3s https://docs.akri.sh/user-guide/cluster-setup#configure-crictl
+    # enable discovery handlers
+    onvif:
+      discovery:
+        enabled: true
+    udev:
+      discovery:
+        enabled: true
+    opcua:
+      discovery:
+        enabled: true
+    debugEcho:
+      discovery:
+        enabled: true
 
