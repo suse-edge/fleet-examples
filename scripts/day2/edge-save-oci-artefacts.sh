@@ -41,14 +41,14 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [[ -z "${source_registry}" ]]; then
-    usage
-    exit 1
-fi
-
 if [[ $help ]]; then
     usage
     exit 0
+fi
+
+if [[ -z "${source_registry}" ]]; then
+    usage
+    exit 1
 fi
 
 if [ ! -z "${source_registry}" ]; then
@@ -62,8 +62,8 @@ if ! command -v "helm" &> /dev/null; then
 fi
 
 
-temp_dir=/tmp/edge-release-oci-tgz-$(date +%Y%m%d)
-mkdir -p ${temp_dir}
+temp_dir=edge-release-oci-tgz-$(date +%Y%m%d)
+mkdir ${temp_dir}
 trap "rm -rf ${temp_dir}" EXIT
 
 while IFS= read -r i; do

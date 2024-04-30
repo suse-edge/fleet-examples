@@ -39,6 +39,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+if [[ $help ]]; then
+    usage
+    exit 0
+fi
+
 if [[ -z "${target_registry}" ]]; then
     usage
     exit 1
@@ -52,11 +57,6 @@ fi
 if [[ -z "${archive_dir}" ]]; then
     usage
     exit 1
-fi
-
-if [[ $help ]]; then
-    usage
-    exit 0
 fi
 
 if [ ! -z "${source_registry}" ]; then

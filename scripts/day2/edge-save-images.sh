@@ -45,6 +45,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+if [[ $help ]]; then
+    usage
+    exit 0
+fi
+
 if [[ -z "${images}" ]]; then
     echo "Missing '-i|--images'"
     usage
@@ -57,18 +62,12 @@ if [ -z "${source_registry}" ]; then
     exit 1
 fi
 
-if [[ $help ]]; then
-    usage
-    exit 0
-fi
-
 pulled=""
 while IFS= read -r i; do
     [ -z "${i}" ] && continue
 
     found=""
     for reg_entry in ${source_registry//,/ } ; do
-        echo "+ \"$str\""
         img="${reg_entry}/${i}"
 
         if docker pull "${img}" > /dev/null 2>&1; then
