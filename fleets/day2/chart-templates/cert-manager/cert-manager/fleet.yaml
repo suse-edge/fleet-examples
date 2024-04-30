@@ -1,0 +1,9 @@
+defaultNamespace: cert-manager
+
+helm:
+  releaseName: cert-manager
+  chart: "cert-manager"
+  repo: "https://charts.jetstack.io"
+  version: "1.14.2"
+  # custom chart value overrides
+  values: {}

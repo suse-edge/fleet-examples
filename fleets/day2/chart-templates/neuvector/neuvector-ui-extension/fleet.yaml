@@ -1,0 +1,9 @@
+defaultNamespace: cattle-ui-plugin-system
+
+helm:
+  releaseName: "neuvector-ui-ext"
+  chart: "neuvector-ui-ext"
+  repo: "https://github.com/rancher/ui-plugin-charts/raw/main/"
+  version: "1.0.0"
+  # custom chart value overrides
+  values: {}

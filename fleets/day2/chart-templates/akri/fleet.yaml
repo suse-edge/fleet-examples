@@ -1,0 +1,23 @@
+defaultNamespace: akri
+
+helm:
+  releaseName: akri
+  chart: "oci://registry.suse.com/edge/akri-chart"
+  version: "0.12.20"
+
+  # custom chart value overrides
+  values:
+    kubernetesDistro: "k3s" # Use 'k3s' for rke2/k3s https://docs.akri.sh/user-guide/cluster-setup#configure-crictl
+    # enable discovery handlers
+    onvif:
+      discovery:
+        enabled: true
+    udev:
+      discovery:
+        enabled: true
+    opcua:
+      discovery:
+        enabled: true
+    debugEcho:
+      discovery:
+        enabled: true

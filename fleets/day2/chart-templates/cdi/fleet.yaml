@@ -1,0 +1,24 @@
+defaultNamespace: kubevirt
+
+helm:
+  releaseName: cdi
+  chart: "oci://registry.suse.com/edge/cdi-chart"
+  version: "0.2.3"
+  # custom chart value overrides
+  values: {}
+
+# https://fleet.rancher.io/bundle-diffs
+diff:
+  comparePatches:
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: Role
+    name: cdi-operator
+    namespace: kubevirt
+    operations:
+    - {"op":"remove", "path":"/metadata/labels"}
+  - apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    name: cdi-operator
+    namespace: kubevirt
+    operations:
+    - {"op":"remove", "path":"/metadata/labels"}

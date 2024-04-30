@@ -1,0 +1,17 @@
+defaultNamespace: cattle-elemental-system
+
+helm:
+  releaseName: elemental-operator
+  chart: "oci://registry.suse.com/rancher/elemental-operator-chart"
+  version: "1.4.3"
+  # custom chart value overrides
+  values: {}
+
+# https://fleet.rancher.io/bundle-diffs
+diff:
+  comparePatches:
+  - apiVersion: management.cattle.io/v3
+    kind: GlobalRole
+    name: elemental-operator
+    operations:
+    - {"op":"remove", "path":"/builtin"}
