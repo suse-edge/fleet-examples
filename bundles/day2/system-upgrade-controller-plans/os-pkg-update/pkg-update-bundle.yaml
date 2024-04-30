@@ -1,0 +1,105 @@
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: os-pkg-update
+  namespace: fleet-default
+spec:
+  resources:
+  - content: |
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: os-pkg-plan-control-plane
+        namespace: cattle-system
+      spec:
+        concurrency: 1
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+        tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Equal"
+          value: "true"
+          effect: "NoExecute"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/etcd"
+          operator: "Equal"
+          effect: "NoExecute"
+        serviceAccountName: system-upgrade-controller
+        secrets:
+          - name: os-pkg-update
+            path: /host/run/system-upgrade/secrets/os-pkg-update
+        cordon: true
+        version: "3.0.0"
+        upgrade:
+          image: registry.opensuse.org/opensuse/tumbleweed:latest
+          command: ["chroot", "/host"]
+          args: ["sh", "/run/system-upgrade/secrets/os-pkg-update/update.sh"]
+      ---
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: os-pkg-plan-agent
+        namespace: cattle-system
+      spec:
+        concurrency: 1
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node that does not contain the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+        serviceAccountName: system-upgrade-controller
+        secrets:
+          - name: os-pkg-update
+            path: /host/run/system-upgrade/secrets/os-pkg-update
+        cordon: true
+        version: "3.0.0"
+        upgrade:
+          image: registry.opensuse.org/opensuse/tumbleweed:latest
+          command: ["chroot", "/host"]
+          args: ["sh", "/run/system-upgrade/secrets/os-pkg-update/update.sh"]
+      ---
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: os-pkg-update
+        namespace: cattle-system
+      type: Opaque
+      stringData:
+        update.sh: |
+          #!/bin/sh
+          
+          UPDATE_SERVICE_PATH=/etc/systemd/system/edge-update.service
+          
+          echo "Creating edge-update.service..."
+          cat <<'EOF' >${UPDATE_SERVICE_PATH}
+          [Unit]
+          Description=SUSE Edge Upgrade Service
+          ConditionACPower=true
+          Wants=network.target
+          After=network.target
+
+          [Service]
+          Type=oneshot
+          Environment=UPDATE_METHOD=dup
+          EnvironmentFile=-/etc/edge/edge-update.conf
+          ExecStart=/usr/sbin/transactional-update cleanup ${UPDATE_METHOD}
+          ExecStartPost=-/bin/bash -c '[ -f /run/reboot-needed ] && shutdown -r +1'
+          IOSchedulingClass=best-effort
+          IOSchedulingPriority=7
+          EOF
+
+          echo "Starting OS package update process..."
+          systemctl start edge-update.service &
+          tail --pid $! -f cat /var/log/transactional-update.log
+
+          echo "Cleaning up..."
+          # Remove service after it has finished its work
+          rm ${UPDATE_SERVICE_PATH}
+          systemctl daemon-reload
+    name: os-pkg-update-bundle.yaml
+  targets:
+  # Match nothing, user needs to specify targets
+  - clusterSelector: null
