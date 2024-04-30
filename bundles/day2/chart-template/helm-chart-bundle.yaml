@@ -15,7 +15,7 @@ spec:
         name: template-chart
         # exact namespace for the helm chart
         # release that you wish to upgrade
-        namespace: longhorn-system
+        namespace: template-namespace
       spec:
         # For non-OCI helm charts
         # repo: "https://template.foo.bar"
