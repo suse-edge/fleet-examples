@@ -1,0 +1,13 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: os-pkg-update
+  namespace: fleet-default
+spec:
+  revision: edge-3.0.0
+  paths:
+  - fleets/day2/system-upgrade-controller-plans/os-pkg-update
+  repo: https://github.com/ipetrov117/fleet-examples.git
+  targets:
+  # Match nothing, user needs to specify targets
+  - clusterSelector: null
