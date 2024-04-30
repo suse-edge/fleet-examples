@@ -1,0 +1,12 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: elemental
+  namespace: fleet-local
+spec:
+  repo: https://github.com/suse-edge/fleet-examples.git
+  branch: main
+  paths:
+  - fleets/general/elemental/
+  # If the rancher ui plugin operator is not deployed, enable this
+  # - fleets/rancher-ui-plugin-operator
