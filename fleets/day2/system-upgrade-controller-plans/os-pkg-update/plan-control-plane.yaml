@@ -1,0 +1,31 @@
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: os-pkg-plan-control-plane
+spec:
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
+      - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+  tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/etcd"
+    operator: "Equal"
+    effect: "NoExecute"
+  serviceAccountName: system-upgrade-controller
+  secrets:
+    - name: os-pkg-update
+      path: /host/run/system-upgrade/secrets/os-pkg-update
+  cordon: true
+  version: "3.0.0"
+  upgrade:
+    image: registry.opensuse.org/opensuse/tumbleweed:latest
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/os-pkg-update/update.sh"]
