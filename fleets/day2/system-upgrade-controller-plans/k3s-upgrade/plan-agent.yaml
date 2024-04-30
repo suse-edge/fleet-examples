@@ -1,0 +1,25 @@
+# worker upgrade plan
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: k3s-plan-agent
+  labels:
+    k3s-upgrade: agent
+spec:
+  concurrency: 2 
+  nodeSelector:
+    matchExpressions:
+      # will trigger upgrade for any node that does not contain the 'node-role.kubernetes.io/control-plane' label
+      - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+  serviceAccountName: system-upgrade-controller
+  prepare:
+    image: rancher/k3s-upgrade
+    args:
+    - prepare
+    - k3s-plan-control-plane
+  drain:
+    force: true
+    skipWaitForDeleteTimeout: 60
+  upgrade:
+    image: rancher/k3s-upgrade
+  version: v1.28.8+k3s1

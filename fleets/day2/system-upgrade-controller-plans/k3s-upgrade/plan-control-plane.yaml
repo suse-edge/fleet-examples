@@ -1,0 +1,28 @@
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: k3s-plan-control-plane
+  labels:
+    k3s-upgrade: control-plane
+spec:
+  concurrency: 1
+  nodeSelector:
+    matchExpressions:
+      # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
+      - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+  tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/etcd"
+    operator: "Equal"
+    effect: "NoExecute"
+  serviceAccountName: system-upgrade-controller
+  cordon: true
+  upgrade:
+    image: rancher/k3s-upgrade
+  version: v1.28.8+k3s1
