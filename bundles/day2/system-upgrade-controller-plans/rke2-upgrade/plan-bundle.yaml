@@ -1,0 +1,69 @@
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: rke2-upgrade
+  namespace: fleet-default
+spec:
+  resources:
+  - content: |
+      # control-plane upgrade plan
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: rke2-plan-control-plane
+        namespace: cattle-system
+        labels:
+          rke2-upgrade: control-plane
+      spec:
+        concurrency: 1
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+        tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Equal"
+          value: "true"
+          effect: "NoExecute"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/etcd"
+          operator: "Equal"
+          effect: "NoExecute"
+        serviceAccountName: system-upgrade-controller
+        cordon: true
+        upgrade:
+          image: rancher/rke2-upgrade
+        version: v1.28.8+rke2r1
+      ---
+      # worker upgrade plan
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: rke2-plan-agent
+        namespace: cattle-system
+        labels:
+          rke2-upgrade: agent
+      spec:
+        concurrency: 2
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node that does not contain the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+        prepare:
+          args:
+          - prepare
+          - rke2-plan-control-plane
+          image: rancher/rke2-upgrade
+        serviceAccountName: system-upgrade-controller
+        cordon: true
+        drain:
+          force: true
+        upgrade:
+          image: rancher/rke2-upgrade
+        version: v1.28.8+rke2r1
+    name: rke2-upgrade-bundle.yaml
+  targets:
+  # Match nothing, user needs to specify targets
+  - clusterSelector: null
