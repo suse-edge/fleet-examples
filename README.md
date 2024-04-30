@@ -3,53 +3,53 @@
 * [Simple](./fleets/simple) a deployment + service (x86_64 & arm64)
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/simple-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/simple-gitrepo.yaml
 ```
 
 * [Akri](./fleets/akri) - [Akri](https://github.com/project-akri/akri) via [SUSE Edge charts repository](https://suse-edge.github.io/charts/)
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/akri-suse-edge-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/akri-suse-edge-gitrepo.yaml
 ```
 
 * [Kubevirt](./fleets/kubevirt) - [Kubevirt](https://github.com/kubevirt/kubevirt) via [SUSE Edge charts repository](https://suse-edge.github.io/charts/)
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/kubevirt-suse-edge-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/kubevirt-suse-edge-gitrepo.yaml
 ```
 
 * [MetalLB](./fleets/metallb) - [MetalLB](https://metallb.universe.tf/) via [Rancher Partner charts repository](https://github.com/rancher/partner-charts/)
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/metallb-suse-edge-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/metallb-suse-edge-gitrepo.yaml
 ```
 
 * [Elemental](./fleets/elemental) - [Elemental Operator](https://github.com/rancher/elemental-operator), including the [Elemental's Rancher UI Plugin](https://github.com/rancher/ui-plugin-charts/):
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/elemental-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/elemental-gitrepo.yaml
 ```
 
-NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Elemental Gitrepo](./gitrepos/elemental-gitrepo.yaml) file.
+NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Elemental Gitrepo](./gitrepos/general/elemental-gitrepo.yaml) file.
 
 * [Opni](./fleets/opni) - [Opni](https://github.com/rancher/opni), including the [Opni's Rancher UI Plugin](https://github.com/rancher/opni-ui/):
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/opni-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/opni-gitrepo.yaml
 ```
 
-NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Opni Gitrepo](./gitrepos/opni-gitrepo.yaml) file.
+NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Opni Gitrepo](./gitrepos/general/opni-gitrepo.yaml) file.
 
 * [Rancher's UI Plugin Operator](./fleets/rancher-ui-plugin-operator) - [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator):
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/rancher-ui-plugin-operator-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/rancher-ui-plugin-operator-gitrepo.yaml
 ```
 
 * [Longhorn](./fleets/longhorn) - [Longhorn](https://longhorn.io/):
 
 ```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/longhorn-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/longhorn-gitrepo.yaml
 ```
 
 A few notes about this example:
@@ -154,7 +154,7 @@ This is basically intended to be used with the [create-vm.sh](../slemicro/create
 ./create_vm.sh -f myvm
 export KUBECONFIG=$(./get_kubeconfig.sh -f myvm -w)
 kubectl annotate clusters.fleet.cattle.io/local -n fleet-local "ingressip=$(kubectl get svc -n kube-system traefik -o jsonpath='{.status.loadBalancer.ingress[0].ip}')"
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/longhorn-gitrepo.yaml
+kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/longhorn-gitrepo.yaml
 ```
 
 **NOTE:** Due to https://github.com/rancher/fleet/issues/1507, this needs to be done before applying the longhorn gitrepo:
