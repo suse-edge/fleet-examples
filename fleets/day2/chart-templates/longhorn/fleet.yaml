@@ -1,0 +1,35 @@
+defaultNamespace: longhorn-system
+
+helm:
+  releaseName: "longhorn"
+  chart: "longhorn"
+  repo: "https://charts.longhorn.io"
+  version: "1.6.1"
+  takeOwnership: true
+  # custom chart value overrides
+  values: {}
+
+# https://fleet.rancher.io/bundle-diffs
+diff:
+  comparePatches:
+  - apiVersion: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    name: engineimages.longhorn.io
+    operations:
+    - {"op":"remove", "path":"/status/conditions"}
+    - {"op":"remove", "path":"/status/storedVersions"}
+    - {"op":"remove", "path":"/status/acceptedNames"}
+  - apiVersion: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    name: nodes.longhorn.io
+    operations:
+    - {"op":"remove", "path":"/status/conditions"}
+    - {"op":"remove", "path":"/status/storedVersions"}
+    - {"op":"remove", "path":"/status/acceptedNames"}
+  - apiVersion: apiextensions.k8s.io/v1
+    kind: CustomResourceDefinition
+    name: volumes.longhorn.io
+    operations:
+    - {"op":"remove", "path":"/status/conditions"}
+    - {"op":"remove", "path":"/status/storedVersions"}
+    - {"op":"remove", "path":"/status/acceptedNames"}

@@ -1,0 +1,9 @@
+defaultNamespace: neuvector-system
+
+helm:
+  releaseName: "neuvector"
+  chart: "neuvector"
+  repo: "https://charts.rancher.io"
+  version: "103.0.3+up2.7.6"
+  # custom chart value overrides
+  values: {}
