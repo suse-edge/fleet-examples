@@ -57,9 +57,7 @@ spec:
           args:
           - prepare
           - k3s-plan-control-plane
-        drain:
-          force: true
-          skipWaitForDeleteTimeout: 60
+        cordon: true
         upgrade:
           image: rancher/k3s-upgrade
         version: v1.28.8+k3s1
