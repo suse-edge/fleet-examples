@@ -1,0 +1,40 @@
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: eib-chart-upgrade
+spec:
+  concurrency: 3
+  nodeSelector:
+    matchExpressions:
+      # Run on all control-plane nodes
+      - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+  tolerations:
+  - key: "CriticalAddonsOnly"
+    operator: "Equal"
+    value: "true"
+    effect: "NoExecute"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Equal"
+    effect: "NoSchedule"
+  - key: "node-role.kubernetes.io/etcd"
+    operator: "Equal"
+    effect: "NoExecute"
+  serviceAccountName: system-upgrade-controller
+  secrets:
+    - name: eib-chart-upgrade-script
+      path: /host/run/system-upgrade/secrets/eib-chart-upgrade-script
+    - name: eib-chart-upgrade-user-data
+      path: /host/run/system-upgrade/secrets/eib-chart-upgrade-user-data
+  cordon: true
+  # Version of the specific Edge release that this Plan relates to
+  version: "3.0.0"
+  upgrade:
+    image: registry.suse.com/bci/bci-base:15.5
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/eib-chart-upgrade-script/upgrade.sh"]
+    # For when you want to backup your chart
+    # manifest data under a specific directory
+    # 
+    # envs:
+    # - name: MANIFEST_BACKUP_DIR
+    #   value: "/foo/bar"
