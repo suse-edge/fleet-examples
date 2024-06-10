@@ -1,0 +1,13 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: eib-chart-upgrade
+  namespace: fleet-default
+spec:
+  revision: edge-3.0.0
+  paths:
+  - fleets/day2/system-upgrade-controller-plans/eib-chart-upgrade
+  repo: https://github.com/ipetrov117/fleet-examples.git
+  targets:
+  # Match nothing, user needs to specify targets
+  - clusterSelector: null
