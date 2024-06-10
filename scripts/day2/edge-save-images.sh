@@ -5,7 +5,7 @@ source_registry=""
 
 usage () {
     echo "USAGE: $0 [--image-list edge-release-images.txt] [--images edge-images.tar.gz] --source-registry registry.suse.com"
-    echo "  [-i|--images] tar.gz file to use with 'docker load'."
+    echo "  [-i|--images] tar.gz file to use with 'podman load'."
     echo "  [-s|--source-registry] source registry to pull images from in registry:port format e.g. registry.suse.com."
     echo "  [-l|--image-list path] text file with list of images; one image per line."
     echo "  [-h|--help] Usage message"
@@ -70,12 +70,12 @@ while IFS= read -r i; do
     for reg_entry in ${source_registry//,/ } ; do
         img="${reg_entry}/${i}"
 
-        if docker pull "${img}" > /dev/null 2>&1; then
+        if podman pull "${img}" > /dev/null 2>&1; then
             echo "Image pull success: ${img}"
             pulled="${pulled} ${img}"
             found="true"
             break
-        elif docker inspect "${img}" > /dev/null 2>&1; then
+        elif podman inspect "${img}" > /dev/null 2>&1; then
             pulled="${pulled} ${img}"
             break
         fi
@@ -89,4 +89,4 @@ while IFS= read -r i; do
 done < "${list}"
 
 echo "Creating ${images} with $(echo ${pulled} | wc -w | tr -d '[:space:]') images"
-docker save $(echo ${pulled}) | gzip --stdout > ${images}
+podman save $(echo ${pulled}) | gzip --stdout > ${images}
