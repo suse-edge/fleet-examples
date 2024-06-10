@@ -9,4 +9,3 @@ helm:
       cattle:
         psp:
           enabled: false
-  
