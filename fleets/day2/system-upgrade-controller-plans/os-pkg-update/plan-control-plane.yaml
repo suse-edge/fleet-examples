@@ -26,6 +26,6 @@ spec:
   cordon: true
   version: "3.0.0"
   upgrade:
-    image: registry.opensuse.org/opensuse/tumbleweed:latest
+    image: registry.suse.com/bci/bci-base:15.5
     command: ["chroot", "/host"]
     args: ["sh", "/run/system-upgrade/secrets/os-pkg-update/update.sh"]
