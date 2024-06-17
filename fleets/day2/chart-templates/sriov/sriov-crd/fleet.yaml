@@ -1,0 +1,8 @@
+defaultNamespace: kube-system
+
+helm:
+  releaseName: sriov-crd-chart
+  chart: "oci://registry.suse.com/edge/sriov-crd-chart"
+  version: "1.2.2"
+  # custom chart value overrides
+  values: {}
