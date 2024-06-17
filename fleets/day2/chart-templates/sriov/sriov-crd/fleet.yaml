@@ -1,4 +1,4 @@
-defaultNamespace: kube-system
+defaultNamespace: sriov-network-operator
 
 helm:
   releaseName: sriov-crd-chart
