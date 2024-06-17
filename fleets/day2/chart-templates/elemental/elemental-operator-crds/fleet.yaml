@@ -3,6 +3,6 @@ defaultNamespace: cattle-elemental-system
 helm:
   releaseName: elemental-operator-crds
   chart: "oci://registry.suse.com/rancher/elemental-operator-crds-chart"
-  version: "1.4.3"
+  version: "1.4.4"
   # custom chart value overrides
   values: {}
