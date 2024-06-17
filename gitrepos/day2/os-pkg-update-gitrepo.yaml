@@ -4,10 +4,10 @@ metadata:
   name: os-pkg-update
   namespace: fleet-default
 spec:
-  revision: edge-3.0.0
+  revision: release-3.0.1
   paths:
   - fleets/day2/system-upgrade-controller-plans/os-pkg-update
-  repo: https://github.com/ipetrov117/fleet-examples.git
+  repo: https://github.com/suse-edge/fleet-examples.git
   targets:
   # Match nothing, user needs to specify targets
   - clusterSelector: null
