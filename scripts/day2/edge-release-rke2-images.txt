@@ -1,0 +1,6 @@
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/sha256sum-amd64.txt
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/rke2.linux-amd64.tar.gz
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/rke2-images.linux-amd64.tar.zst
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/rke2-images-multus.linux-amd64.tar.zst
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/rke2-images-core.linux-amd64.tar.zst
+https://github.com/rancher/rke2/releases/download/v1.28.9%2Brke2r1/rke2-images-cilium.linux-amd64.tar.zst
