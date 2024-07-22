@@ -67,20 +67,14 @@ while IFS= read -r i; do
     [ -z "${i}" ] && continue
 
     found=""
-    for reg_entry in ${source_registry//,/ } ; do
-        img="${reg_entry}/${i}"
-
-        if podman pull "${img}" > /dev/null 2>&1; then
-            echo "Image pull success: ${img}"
-            pulled="${pulled} ${img}"
-            found="true"
-            break
-        elif podman inspect "${img}" > /dev/null 2>&1; then
-            pulled="${pulled} ${img}"
-            break
-        fi
-    done
-
+    img="${source_registry}/${i}"
+    if podman pull "${img}" > /dev/null 2>&1; then
+        echo "Image pull success: ${img}"
+        pulled="${pulled} ${img}"
+        found="true"
+    elif podman inspect "${img}" > /dev/null 2>&1; then
+        pulled="${pulled} ${img}"
+    fi
     if [ ! -z "${found}" ]; then
         found=""
     else
