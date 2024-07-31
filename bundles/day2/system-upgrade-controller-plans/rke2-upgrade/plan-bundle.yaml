@@ -35,7 +35,7 @@ spec:
         cordon: true
         upgrade:
           image: rancher/rke2-upgrade
-        version: v1.28.9+rke2r1
+        version: v1.28.10+rke2r1
       ---
       # worker upgrade plan
       apiVersion: upgrade.cattle.io/v1
@@ -62,7 +62,7 @@ spec:
           force: true
         upgrade:
           image: rancher/rke2-upgrade
-        version: v1.28.9+rke2r1
+        version: v1.28.10+rke2r1
     name: rke2-upgrade-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
