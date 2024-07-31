@@ -4,7 +4,7 @@ metadata:
   name: os-pkg-update
   namespace: fleet-default
 spec:
-  revision: release-3.0.1
+  revision: release-3.0.2
   paths:
   - fleets/day2/system-upgrade-controller-plans/os-pkg-update
   repo: https://github.com/suse-edge/fleet-examples.git
