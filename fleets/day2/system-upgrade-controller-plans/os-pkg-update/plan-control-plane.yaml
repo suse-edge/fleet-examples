@@ -24,7 +24,7 @@ spec:
     - name: os-pkg-update
       path: /host/run/system-upgrade/secrets/os-pkg-update
   cordon: true
-  version: "3.0.1"
+  version: "3.0.2"
   upgrade:
     image: registry.suse.com/bci/bci-base:15.5
     command: ["chroot", "/host"]
