@@ -3,7 +3,7 @@ defaultNamespace: kubevirt
 helm:
   releaseName: cdi
   chart: "oci://registry.suse.com/edge/cdi-chart"
-  version: "0.2.3"
+  version: "0.3.0"
   # custom chart value overrides
   values: {}
 
