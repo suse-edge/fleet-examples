@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: eib-chart-upgrade-script
+  namespace: cattle-system
 type: Opaque
 stringData:
   upgrade.sh: |

@@ -2,6 +2,7 @@ apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
   name: rke2-plan-agent
+  namespace: cattle-system
   labels:
     rke2-upgrade: agent
 spec:

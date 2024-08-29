@@ -2,6 +2,7 @@ apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
   name: os-pkg-plan-control-plane
+  namespace: cattle-system
 spec:
   concurrency: 1
   nodeSelector:

@@ -2,6 +2,7 @@ apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
   name: k3s-plan-control-plane
+  namespace: cattle-system
   labels:
     k3s-upgrade: control-plane
 spec:
