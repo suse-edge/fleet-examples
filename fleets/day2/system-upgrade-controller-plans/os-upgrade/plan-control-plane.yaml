@@ -1,9 +1,12 @@
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: os-pkg-plan-control-plane
+  name: cp-os-upgrade-edge-310
 spec:
   concurrency: 1
+  # Override the default SUC set value of 900 with something that will
+  # give the enough time to the control-plane plan to finish 
+  jobActiveDeadlineSecs: 43200
   nodeSelector:
     matchExpressions:
       # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
@@ -21,11 +24,11 @@ spec:
     effect: "NoExecute"
   serviceAccountName: system-upgrade-controller
   secrets:
-    - name: os-pkg-update
-      path: /host/run/system-upgrade/secrets/os-pkg-update
+    - name: os-upgrade-edge-310
+      path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
   cordon: true
-  version: "3.0.2"
+  version: "3.1.0"
   upgrade:
-    image: registry.suse.com/bci/bci-base:15.5
+    image: registry.suse.com/bci/bci-base:15.6
     command: ["chroot", "/host"]
-    args: ["sh", "/run/system-upgrade/secrets/os-pkg-update/update.sh"]
+    args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]

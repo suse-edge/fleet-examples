@@ -1,0 +1,51 @@
+apiVersion: upgrade.cattle.io/v1
+kind: Plan
+metadata:
+  name: agent-os-upgrade-edge-310
+spec:
+  concurrency: 1
+  # Override default SUC set value of 900 with something that will
+  # give the enough time to the agent plan to finish 
+  jobActiveDeadlineSecs: 43200
+  nodeSelector:
+    matchExpressions:
+      # will trigger upgrade for any node that does not contain the 'node-role.kubernetes.io/control-plane' label
+      - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+  serviceAccountName: system-upgrade-controller
+  secrets:
+    - name: os-upgrade-edge-310
+      path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+  cordon: true
+  version: "3.1.0"
+  prepare:
+    image: registry.opensuse.org/isv/suse/edge/lifecycle/containerfile/kubectl:1.30.3
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        CHECK_INTERVAL=20
+        while true; do
+          RUNNING_CP_JOBS=$(kubectl get jobs -l upgrade.cattle.io/plan="${MASTER_PLAN}" --field-selector=status.successful!=1 --no-headers)
+          if [ -n "${RUNNING_CP_JOBS}" ]; then
+            echo "${MASTER_PLAN} plan has jobs that are still running. Checking again in ${CHECK_INTERVAL} seconds..."
+          else
+            PLAN_APPLYING_CHECK=$(kubectl get plan "${MASTER_PLAN}" -n "${NAMESPACE}" -o jsonpath="{.status.applying}")
+            if [ -n "$PLAN_APPLYING_CHECK" ]; then
+              echo "SUC has not yet cleared ${MASTER_PLAN} plan 'status.applying' list. Checking again in ${CHECK_INTERVAL} seconds..."
+            else
+              echo "${MASTER_PLAN} control-plane upgrade has finished. Proceeding to agent node upgrade.."
+              break
+            fi
+          fi
+          sleep $CHECK_INTERVAL
+        done
+    envs:
+    - name: MASTER_PLAN
+      value: "cp-os-upgrade-edge-310"
+    - name: NAMESPACE
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.namespace
+  upgrade:
+    image: registry.suse.com/bci/bci-base:15.6
+    command: ["chroot", "/host"]
+    args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
