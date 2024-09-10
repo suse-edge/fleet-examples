@@ -5,4 +5,4 @@ edge/3.1/endpoint-copier-operator-chart:0.2.1
 edge/3.1/kubevirt-chart:0.4.0
 edge/3.1/kubevirt-dashboard-extension-chart:1.1.0
 edge/3.1/metal3-chart:0.8.1
-edge/metallb-chart:0.14.3
+edge/3.1/metallb-chart:0.14.9
