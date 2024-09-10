@@ -10,7 +10,6 @@ spec:
       kind: Plan
       metadata:
         name: agent-os-upgrade-edge-310
-        namespace: cattle-system
       spec:
         concurrency: 1
         # Override default SUC set value of 900 with something that will
@@ -58,6 +57,9 @@ spec:
           image: registry.suse.com/bci/bci-base:15.6
           command: ["chroot", "/host"]
           args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          envFrom:
+          - configMapRef:
+              name: os-upgrade-edge-310
       ---
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
@@ -94,6 +96,9 @@ spec:
           image: registry.suse.com/bci/bci-base:15.6
           command: ["chroot", "/host"]
           args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          envFrom:
+          - configMapRef:
+              name: os-upgrade-edge-310
       ---
       apiVersion: v1
       kind: Secret
@@ -125,8 +130,6 @@ spec:
           }
 
           executeUpgrade(){
-              # Common Platform Enumeration (CPE) coming from the release manifest
-              RELEASE_CPE="cpe:/o:suse:sl-micro:6.0"
               # Common Platform Enumeration (CPE) that the system is currently running with
               CURRENT_CPE=`cat /etc/os-release | grep -w CPE_NAME | cut -d "=" -f 2 | tr -d '"'`
 
@@ -134,22 +137,17 @@ spec:
               EXEC_START_PRE_LINES=""
 
               # Determine whether this is a package update or a migration
-              if [ "${RELEASE_CPE}" == "${CURRENT_CPE}" ]; then
+              if [ "${EDGE_RELEASE_CPE}" == "${CURRENT_CPE}" ]; then
                   # Package update if both CPEs are the same
                   EXEC_START="/usr/sbin/transactional-update cleanup up"
                   SERVICE_NAME="os-pkg-update.service"
               else
-                  # GPG key for the SL Micro 6.0 RPM repository
-                  SL_MICRO_6_0_REPO_GPG_KEY_PATH="/usr/lib/rpm/gnupg/keys/gpg-pubkey-09d9ea69-645b99ce.asc"
-                  # SL Micro 6.0 product information
                   SYSTEM_ARCH=`arch`
-                  SL_MICRO_ZYPPER_ID="SL-Micro"
-                  SL_MICRO_VERSION="6.0"
                   FULLY_QUANTIFIED_PRODUCT=${SL_MICRO_ZYPPER_ID}/${SL_MICRO_VERSION}/${SYSTEM_ARCH}
 
                   # Migration if the CPEs are different
                   EXEC_START_PRE_PKG_UPGRADE="ExecStartPre=/usr/sbin/transactional-update cleanup up"
-                  EXEC_START_PRE_RPM_IMPORT="ExecStartPre=/usr/sbin/transactional-update --continue run rpm --import ${SL_MICRO_6_0_REPO_GPG_KEY_PATH}"
+                  EXEC_START_PRE_RPM_IMPORT="ExecStartPre=/usr/sbin/transactional-update --continue run rpm --import ${SL_MICRO_REPO_GPG_KEY_PATH}"
                   EXEC_START_PRE_LINES=$(echo -e "${EXEC_START_PRE_PKG_UPGRADE}\n${EXEC_START_PRE_RPM_IMPORT}")
 
                   EXEC_START="/usr/sbin/transactional-update --continue run zypper migration --non-interactive --product ${FULLY_QUANTIFIED_PRODUCT} --root /"
@@ -205,6 +203,17 @@ spec:
           }
 
           executeUpgrade
+      ---
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: os-upgrade-edge-310
+        namespace: cattle-system
+      data:
+        EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
+        SL_MICRO_ZYPPER_ID: "SL-Micro"
+        SL_MICRO_VERSION: "6.0"
+        SL_MICRO_REPO_GPG_KEY_PATH: "/usr/lib/rpm/gnupg/keys/gpg-pubkey-09d9ea69-645b99ce.asc"
     name: os-pkg-update-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
