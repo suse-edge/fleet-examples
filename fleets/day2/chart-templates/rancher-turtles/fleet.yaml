@@ -1,0 +1,12 @@
+defaultNamespace: rancher-turtles-system
+
+helm:
+  releaseName: rancher-turtles
+  chart: "oci://registry.suse.com/edge/3.1/rancher-turtles-chart"
+  version: "0.2.0"
+  # custom chart value overrides
+  values:
+    rancherTurtles:
+      features:
+        embedded-capi:
+          disabled: false
