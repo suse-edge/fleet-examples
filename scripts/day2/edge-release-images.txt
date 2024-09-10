@@ -1,10 +1,10 @@
-edge/akri-agent:v0.12.20
-edge/akri-controller:v0.12.20
-edge/akri-debug-echo-discovery-handler:v0.12.20
-edge/akri-onvif-discovery-handler:v0.12.20
-edge/akri-opcua-discovery-handler:v0.12.20
-edge/akri-udev-discovery-handler:v0.12.20
-edge/akri-webhook-configuration:v0.12.20
+edge/3.1/akri-agent:v0.12.20
+edge/3.1/akri-controller:v0.12.20
+edge/3.1/akri-debug-echo-discovery-handler:v0.12.20
+edge/3.1/akri-onvif-discovery-handler:v0.12.20
+edge/3.1/akri-opcua-discovery-handler:v0.12.20
+edge/3.1/akri-udev-discovery-handler:v0.12.20
+edge/3.1/akri-webhook-configuration:v0.12.20
 edge/baremetal-operator:0.5.1
 edge/cluster-api-controller:v1.6.2
 edge/ip-address-manager:1.6.0
