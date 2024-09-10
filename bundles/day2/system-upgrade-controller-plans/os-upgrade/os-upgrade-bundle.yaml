@@ -10,6 +10,7 @@ spec:
       kind: Plan
       metadata:
         name: agent-os-upgrade-edge-310
+        namespace: cattle-system
       spec:
         concurrency: 1
         # Override default SUC set value of 900 with something that will
