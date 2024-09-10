@@ -2,7 +2,7 @@ edge/3.1/akri-chart:0.12.20
 edge/3.1/akri-dashboard-extension-chart:1.1.0
 edge/3.1/cdi-chart:0.4.0
 edge/3.1/endpoint-copier-operator-chart:0.2.1
-edge/kubevirt-chart:0.3.0
-edge/kubevirt-dashboard-extension-chart:1.0.0
+edge/3.1/kubevirt-chart:0.4.0
+edge/3.1/kubevirt-dashboard-extension-chart:1.1.0
 edge/metal3-chart:0.7.3
 edge/metallb-chart:0.14.3
