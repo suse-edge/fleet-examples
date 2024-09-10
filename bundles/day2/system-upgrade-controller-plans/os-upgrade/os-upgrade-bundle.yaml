@@ -10,6 +10,7 @@ spec:
       kind: Plan
       metadata:
         name: agent-os-upgrade-edge-310
+        namespace: cattle-system
       spec:
         concurrency: 1
         # Override default SUC set value of 900 with something that will
@@ -62,6 +63,7 @@ spec:
       kind: Plan
       metadata:
         name: cp-os-upgrade-edge-310
+        namespace: cattle-system
       spec:
         concurrency: 1
         # Override the default SUC set value of 900 with something that will
@@ -97,6 +99,7 @@ spec:
       kind: Secret
       metadata:
         name: os-upgrade-edge-310
+        namespace: cattle-system
       type: Opaque
       stringData:
         upgrade.sh: |
