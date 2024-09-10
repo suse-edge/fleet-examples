@@ -32,3 +32,6 @@ spec:
     image: registry.suse.com/bci/bci-base:15.6
     command: ["chroot", "/host"]
     args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+    envFrom:
+    - configMapRef:
+        name: os-upgrade-edge-310
