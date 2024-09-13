@@ -1,0 +1,12 @@
+resources:
+- job.yaml
+- rbac/
+- secrets/
+
+patches:
+- target:
+    version: v1
+    kind: Job
+    name: eib-charts-upgrader
+    group: batch
+  path: patches/job-patch.yaml
