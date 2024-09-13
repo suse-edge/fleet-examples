@@ -1,0 +1,221 @@
+kind: Bundle
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: os-upgrade-310
+  namespace: fleet-default
+spec:
+  resources:
+  - content: |
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: agent-os-upgrade-edge-310
+        namespace: cattle-system
+      spec:
+        concurrency: 1
+        # Override default SUC set value of 900 with something that will
+        # give the enough time to the agent plan to finish 
+        jobActiveDeadlineSecs: 43200
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node that does not contain the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
+        serviceAccountName: system-upgrade-controller
+        secrets:
+          - name: os-upgrade-edge-310
+            path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+        cordon: true
+        version: "3.1.0"
+        prepare:
+          image: registry.opensuse.org/isv/suse/edge/lifecycle/containerfile/kubectl:1.30.3
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              CHECK_INTERVAL=20
+              while true; do
+                RUNNING_CP_JOBS=$(kubectl get jobs -l upgrade.cattle.io/plan="${MASTER_PLAN}" --field-selector=status.successful!=1 --no-headers)
+                if [ -n "${RUNNING_CP_JOBS}" ]; then
+                  echo "${MASTER_PLAN} plan has jobs that are still running. Checking again in ${CHECK_INTERVAL} seconds..."
+                else
+                  PLAN_APPLYING_CHECK=$(kubectl get plan "${MASTER_PLAN}" -n "${NAMESPACE}" -o jsonpath="{.status.applying}")
+                  if [ -n "$PLAN_APPLYING_CHECK" ]; then
+                    echo "SUC has not yet cleared ${MASTER_PLAN} plan 'status.applying' list. Checking again in ${CHECK_INTERVAL} seconds..."
+                  else
+                    echo "${MASTER_PLAN} control-plane upgrade has finished. Proceeding to agent node upgrade.."
+                    break
+                  fi
+                fi
+                sleep $CHECK_INTERVAL
+              done
+          envs:
+          - name: MASTER_PLAN
+            value: "cp-os-upgrade-edge-310"
+          - name: NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+        upgrade:
+          image: registry.suse.com/bci/bci-base:15.6
+          command: ["chroot", "/host"]
+          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          envFrom:
+          - configMapRef:
+              name: os-upgrade-edge-310
+      ---
+      apiVersion: upgrade.cattle.io/v1
+      kind: Plan
+      metadata:
+        name: cp-os-upgrade-edge-310
+        namespace: cattle-system
+      spec:
+        concurrency: 1
+        # Override the default SUC set value of 900 with something that will
+        # give the enough time to the control-plane plan to finish 
+        jobActiveDeadlineSecs: 43200
+        nodeSelector:
+          matchExpressions:
+            # will trigger upgrade for any node containing the 'node-role.kubernetes.io/control-plane' label
+            - {key: node-role.kubernetes.io/control-plane, operator: In, values: ["true"]}
+        tolerations:
+        - key: "CriticalAddonsOnly"
+          operator: "Equal"
+          value: "true"
+          effect: "NoExecute"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Equal"
+          effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/etcd"
+          operator: "Equal"
+          effect: "NoExecute"
+        serviceAccountName: system-upgrade-controller
+        secrets:
+          - name: os-upgrade-edge-310
+            path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+        cordon: true
+        version: "3.1.0"
+        upgrade:
+          image: registry.suse.com/bci/bci-base:15.6
+          command: ["chroot", "/host"]
+          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          envFrom:
+          - configMapRef:
+              name: os-upgrade-edge-310
+      ---
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: os-upgrade-edge-310
+        namespace: cattle-system
+      type: Opaque
+      stringData:
+        upgrade.sh: |
+          #!/bin/sh
+          
+          OS_UPGRADED_PLACEHOLDER_PATH="/etc/os-upgrade-successful"
+
+          if [ -f ${OS_UPGRADED_PLACEHOLDER_PATH} ]; then
+              # Due to the nature of how SUC handles OS upgrades,
+              # the OS upgrade pod will be restarted after an OS reboot.
+              # Within the new Pod we only need to check whether the upgrade
+              # has been done. This is done by checking for the '/run/os-upgrade-successful'
+              # file which will only be present on the system if a successful upgrade
+              # of the OS has taken place.
+              echo "Upgrade has already been done. Exiting.."
+              rm ${OS_UPGRADED_PLACEHOLDER_PATH}
+              exit 0
+          fi
+
+          cleanupService(){
+              rm ${1}
+              systemctl daemon-reload
+          }
+
+          executeUpgrade(){
+              # Common Platform Enumeration (CPE) that the system is currently running with
+              CURRENT_CPE=`cat /etc/os-release | grep -w CPE_NAME | cut -d "=" -f 2 | tr -d '"'`
+
+              # Lines that will be appended to the systemd.service 'ExecStartPre' configuration
+              EXEC_START_PRE_LINES=""
+
+              # Determine whether this is a package update or a migration
+              if [ "${EDGE_RELEASE_CPE}" == "${CURRENT_CPE}" ]; then
+                  # Package update if both CPEs are the same
+                  EXEC_START="/usr/sbin/transactional-update cleanup up"
+                  SERVICE_NAME="os-pkg-update.service"
+              else
+                  SYSTEM_ARCH=`arch`
+                  FULLY_QUANTIFIED_PRODUCT=${SL_MICRO_ZYPPER_ID}/${SL_MICRO_VERSION}/${SYSTEM_ARCH}
+
+                  # Migration if the CPEs are different
+                  EXEC_START_PRE_PKG_UPGRADE="ExecStartPre=/usr/sbin/transactional-update cleanup up"
+                  EXEC_START_PRE_RPM_IMPORT="ExecStartPre=/usr/sbin/transactional-update --continue run rpm --import ${SL_MICRO_REPO_GPG_KEY_PATH}"
+                  EXEC_START_PRE_LINES=$(echo -e "${EXEC_START_PRE_PKG_UPGRADE}\n${EXEC_START_PRE_RPM_IMPORT}")
+
+                  EXEC_START="/usr/sbin/transactional-update --continue run zypper migration --non-interactive --product ${FULLY_QUANTIFIED_PRODUCT} --root /"
+                  SERVICE_NAME="os-migration.service"
+              fi
+
+              UPDATE_SERVICE_PATH=/etc/systemd/system/${SERVICE_NAME}
+
+              # Make sure that even after a non-zero exit of the script
+              # we will do a cleanup of the service
+              trap "cleanupService ${UPDATE_SERVICE_PATH}" EXIT
+
+              echo "Creating ${SERVICE_NAME}..."
+              cat <<EOF > ${UPDATE_SERVICE_PATH}
+          [Unit]
+          Description=SUSE Edge Upgrade Service
+          ConditionACPower=true
+          Wants=network.target
+          After=network.target
+
+          [Service]
+          Type=oneshot
+          ${EXEC_START_PRE_LINES:+$EXEC_START_PRE_LINES
+          }ExecStart=${EXEC_START}
+          IOSchedulingClass=best-effort
+          IOSchedulingPriority=7
+          EOF
+
+              echo "Starting ${SERVICE_NAME}..."
+              systemctl start ${SERVICE_NAME} &
+
+              BACKGROUND_PROC_PID=$!
+              tail --pid ${BACKGROUND_PROC_PID} -f /var/log/transactional-update.log
+
+              # Waits for the background process with pid to finish and propagates its exit code to '$?'
+              wait ${BACKGROUND_PROC_PID}
+
+              # Get exit code of backgroup process 
+              BACKGROUND_PROC_EXIT=$?
+              if [ ${BACKGROUND_PROC_EXIT} -ne 0 ]; then
+                  exit ${BACKGROUND_PROC_EXIT}
+              fi
+
+              # Check if reboot is needed.
+              # Will only be needed when transactional-update has successfully
+              # done any package upgrades/updates.
+              if [ -f /run/reboot-needed ]; then
+                  # Create a placeholder indicating that the os upgrade
+                  # has finished succesfully
+                  touch ${OS_UPGRADED_PLACEHOLDER_PATH}
+                  /usr/sbin/reboot
+              fi
+          }
+
+          executeUpgrade
+      ---
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: os-upgrade-edge-310
+        namespace: cattle-system
+      data:
+        EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
+        SL_MICRO_ZYPPER_ID: "SL-Micro"
+        SL_MICRO_VERSION: "6.0"
+        SL_MICRO_REPO_GPG_KEY_PATH: "/usr/lib/rpm/gnupg/keys/gpg-pubkey-09d9ea69-645b99ce.asc"
+    name: os-pkg-update-bundle.yaml
+  targets:
+  # Match nothing, user needs to specify targets
+  - clusterSelector: null
