@@ -1,0 +1,6 @@
+- op: add
+  path: /spec/template/spec/volumes/-
+  value:
+    name: projected-user-data
+    projected:
+      sources:

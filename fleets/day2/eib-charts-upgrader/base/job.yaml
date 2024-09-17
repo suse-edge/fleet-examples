@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: eib-charts-upgrader
+spec:
+  template:
+    spec:
+      serviceAccountName: eib-charts-upgrader
+      containers:
+      - name: kubectl-container
+        image: registry.opensuse.org/isv/suse/edge/lifecycle/containerfile/kubectl:1.30.3
+        command: ["/bin/sh", "-c"]
+        args: ["/tmp/scripts/chartPatch.sh"]
+        volumeMounts:
+        - name: script-volume
+          mountPath: /tmp/scripts
+        - name: projected-user-data
+          mountPath: /tmp/chart-upgrade-data
+      restartPolicy: Never
+      volumes:
+      - name: script-volume
+        secret:
+          secretName: eib-charts-upgrader-script
+          defaultMode: 0755

@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: eib-charts-upgrader
+subjects:
+- kind: ServiceAccount
+  name: eib-charts-upgrader
+  namespace: eib-charts-upgrade
+roleRef:
+  kind: ClusterRole
+  name: eib-charts-upgrader
+  apiGroup: rbac.authorization.k8s.io

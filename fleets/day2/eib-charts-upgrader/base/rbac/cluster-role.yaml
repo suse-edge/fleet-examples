@@ -1,0 +1,8 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: eib-charts-upgrader
+rules:
+- apiGroups: ["helm.cattle.io"]
+  resources: ["helmcharts"]
+  verbs: ["get", "list", "patch"]
