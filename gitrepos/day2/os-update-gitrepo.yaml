@@ -1,12 +1,12 @@
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
-  name: os-pkg-update
+  name: os-upgrade
   namespace: fleet-default
 spec:
   revision: release-3.0.2
   paths:
-  - fleets/day2/system-upgrade-controller-plans/os-pkg-update
+  - fleets/day2/system-upgrade-controller-plans/os-upgrade
   repo: https://github.com/suse-edge/fleet-examples.git
   targets:
   # Match nothing, user needs to specify targets
