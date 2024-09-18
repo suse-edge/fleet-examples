@@ -1,0 +1,8 @@
+defaultNamespace: rancher-turtles-system
+
+helm:
+  releaseName: rancher-turtles-airgap-resources
+  chart: "oci://registry.suse.com/edge/3.1/rancher-turtles-airgap-resources-chart"
+  version: "0.2.0"
+  # custom chart value overrides
+  values: {}
