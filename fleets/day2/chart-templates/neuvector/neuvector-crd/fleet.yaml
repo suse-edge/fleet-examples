@@ -1,0 +1,9 @@
+defaultNamespace: neuvector-system
+
+helm:
+  releaseName: "neuvector-crd"
+  chart: "neuvector-crd"
+  repo: "https://charts.rancher.io"
+  version: "104.0.1+up2.7.9"
+  # custom chart value overrides
+  values: {}
