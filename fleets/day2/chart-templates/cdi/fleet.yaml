@@ -1,4 +1,4 @@
-defaultNamespace: kubevirt
+defaultNamespace: cdi-system
 
 helm:
   releaseName: cdi
@@ -13,12 +13,12 @@ diff:
   - apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
     name: cdi-operator
-    namespace: kubevirt
+    namespace: cdi-system
     operations:
     - {"op":"remove", "path":"/metadata/labels"}
   - apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     name: cdi-operator
-    namespace: kubevirt
+    namespace: cdi-system
     operations:
     - {"op":"remove", "path":"/metadata/labels"}
