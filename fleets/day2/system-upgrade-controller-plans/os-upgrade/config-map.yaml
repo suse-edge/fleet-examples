@@ -6,4 +6,3 @@ data:
   EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
   SL_MICRO_ZYPPER_ID: "SL-Micro"
   SL_MICRO_VERSION: "6.0"
-  SL_MICRO_REPO_GPG_KEY_PATH: "/usr/lib/rpm/gnupg/keys/gpg-pubkey-09d9ea69-645b99ce.asc"
