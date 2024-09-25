@@ -9,8 +9,8 @@ edge/3.1/baremetal-operator:0.6.1
 edge/3.1/cluster-api-controller:v1.7.5
 edge/3.1/ip-address-manager:1.7.1
 edge/3.1/cluster-api-provider-metal3:v1.7.1
-edge/3.1/cluster-api-provider-rke2-bootstrap:0.6.1
-edge/3.1/cluster-api-provider-rke2-controlplane:0.6.1
+edge/3.1/cluster-api-provider-rke2-bootstrap:0.7.0
+edge/3.1/cluster-api-provider-rke2-controlplane:0.7.0
 edge/3.1/edge-image-builder:1.1.0
 edge/3.1/endpoint-copier-operator:0.2.1
 edge/3.1/frr:8.4
