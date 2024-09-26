@@ -1,0 +1,9 @@
+defaultNamespace: longhorn-system
+
+helm:
+  releaseName: "longhorn-crd"
+  chart: "longhorn-crd"
+  repo: "https://charts.rancher.io/"
+  version: "104.2.0+up1.7.1"
+  # custom chart value overrides
+  values: {}
