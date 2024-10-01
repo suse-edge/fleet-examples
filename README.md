@@ -30,20 +30,10 @@ kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main
 kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/elemental-gitrepo.yaml
 ```
 
-NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Elemental Gitrepo](./gitrepos/general/elemental-gitrepo.yaml) file.
-
 * [Opni](./fleets/general/opni) - [Opni](https://github.com/rancher/opni), including the [Opni's Rancher UI Plugin](https://github.com/rancher/opni-ui/):
 
 ```
 kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/opni-gitrepo.yaml
-```
-
-NOTE: If the [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator) is not installed, enable the installation in the [Opni Gitrepo](./gitrepos/general/opni-gitrepo.yaml) file.
-
-* [Rancher's UI Plugin Operator](./fleets/general/rancher-ui-plugin-operator) - [Rancher's UI Plugin Operator](https://github.com/rancher/ui-plugin-operator):
-
-```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/rancher-ui-plugin-operator-gitrepo.yaml
 ```
 
 * [Longhorn](./fleets/general/longhorn) - [Longhorn](https://longhorn.io/):
