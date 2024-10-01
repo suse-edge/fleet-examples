@@ -35,3 +35,6 @@ suse/sles/15.6/virt-controller:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-api:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-exportproxy:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-exportserver:1.3.1-150600.5.9.1
+edge/3.1/upgrade-controller:0.1.0
+edge/3.1/kubectl:1.30.3
+edge/3.1/release-manifest:3.1.0
