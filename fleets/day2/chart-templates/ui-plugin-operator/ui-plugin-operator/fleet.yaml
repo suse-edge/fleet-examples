@@ -1,9 +1,0 @@
-defaultNamespace: cattle-ui-plugin-system
-
-helm:
-  releaseName: "ui-plugin-operator"
-  chart: "ui-plugin-operator"
-  repo: "https://charts.rancher.io/"
-  version: "103.0.2+up0.2.1"
-  # custom chart value overrides
-  values: {}

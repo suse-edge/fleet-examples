@@ -1,9 +1,9 @@
-defaultNamespace: kubevirt
+defaultNamespace: kubevirt-system
 
 helm:
   releaseName: kubevirt
-  chart: "oci://registry.suse.com/edge/kubevirt-chart"
-  version: "0.3.0"
+  chart: "oci://registry.suse.com/edge/3.1/kubevirt-chart"
+  version: "0.4.0"
   # kubevirt namespace is created by kubevirt as well, we need to take ownership of it, otherwise it fails
   takeOwnership: true
   # custom chart value overrides
@@ -15,6 +15,6 @@ diff:
   - apiVersion: kubevirt.io/v1
     kind: KubeVirt
     name: kubevirt
-    namespace: kubevirt
+    namespace: kubevirt-system
     operations:
     - {"op":"remove", "path":"/spec/configuration/developerConfiguration/featureGates"}

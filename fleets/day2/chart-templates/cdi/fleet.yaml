@@ -1,9 +1,9 @@
-defaultNamespace: kubevirt
+defaultNamespace: cdi-system
 
 helm:
   releaseName: cdi
-  chart: "oci://registry.suse.com/edge/cdi-chart"
-  version: "0.3.0"
+  chart: "oci://registry.suse.com/edge/3.1/cdi-chart"
+  version: "0.4.0"
   # custom chart value overrides
   values: {}
 
@@ -13,12 +13,12 @@ diff:
   - apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
     name: cdi-operator
-    namespace: kubevirt
+    namespace: cdi-system
     operations:
     - {"op":"remove", "path":"/metadata/labels"}
   - apiVersion: rbac.authorization.k8s.io/v1
     kind: RoleBinding
     name: cdi-operator
-    namespace: kubevirt
+    namespace: cdi-system
     operations:
     - {"op":"remove", "path":"/metadata/labels"}
