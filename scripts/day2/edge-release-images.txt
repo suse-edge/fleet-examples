@@ -12,7 +12,7 @@ edge/3.1/cluster-api-provider-metal3:v1.7.1
 edge/3.1/cluster-api-provider-rke2-bootstrap:0.7.0
 edge/3.1/cluster-api-provider-rke2-controlplane:0.7.0
 edge/3.1/edge-image-builder:1.1.0
-edge/3.1/endpoint-copier-operator:0.2.1
+edge/3.1/endpoint-copier-operator:v0.2.0
 edge/3.1/frr:8.4
 edge/3.1/frr-k8s:v0.0.14
 edge/3.1/ironic:24.1.2.0
