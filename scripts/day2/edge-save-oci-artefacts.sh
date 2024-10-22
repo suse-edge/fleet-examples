@@ -51,9 +51,14 @@ if [[ -z "${source_registry}" ]]; then
     exit 1
 fi
 
-if [ ! -z "${source_registry}" ]; then
-    source_registry="${source_registry}/"
-fi
+case "${source_registry}" in
+    oci://*)
+        source_registry="${source_registry}/"
+        ;;
+    *)
+        source_registry="oci://${source_registry}/"
+        ;;
+esac
 
 if ! command -v "helm" &> /dev/null; then
     echo "Script requires 'helm' to load images into the target registry."
@@ -75,7 +80,7 @@ while IFS= read -r i; do
         continue
     fi
     
-    helm pull oci://${source_registry}${arrI[0]} --version ${arrI[1]} --destination ${temp_dir}
+    helm pull ${source_registry}${arrI[0]} --version ${arrI[1]} --destination ${temp_dir}
 done < "${list}"
 
 tar -czvf ${oci_archive} ${temp_dir}
