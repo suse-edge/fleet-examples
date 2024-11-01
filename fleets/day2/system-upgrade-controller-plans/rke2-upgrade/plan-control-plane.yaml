@@ -1,7 +1,8 @@
+# SUC Plan related to upgrading the RKE2 version of control-plane nodes
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: rke2-plan-control-plane
+  name: rke2-upgrade-control-plane
   labels:
     rke2-upgrade: control-plane
 spec:

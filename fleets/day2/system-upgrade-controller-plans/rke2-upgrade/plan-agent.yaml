@@ -1,9 +1,10 @@
+# SUC Plan related to upgrading the RKE2 version of worker nodes
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: rke2-plan-agent
+  name: rke2-upgrade-worker
   labels:
-    rke2-upgrade: agent
+    rke2-upgrade: worker
 spec:
   concurrency: 2
   nodeSelector:
@@ -13,7 +14,7 @@ spec:
   prepare:
     args:
     - prepare
-    - rke2-plan-control-plane
+    - rke2-upgrade-control-plane
     image: rancher/rke2-upgrade
   serviceAccountName: system-upgrade-controller
   cordon: true
