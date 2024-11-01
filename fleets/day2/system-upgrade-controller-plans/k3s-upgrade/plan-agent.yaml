@@ -1,10 +1,10 @@
-# worker upgrade plan
+# SUC Plan related to upgrading the K3s version of worker nodes
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: k3s-plan-agent
+  name: k3s-upgrade-worker
   labels:
-    k3s-upgrade: agent
+    k3s-upgrade: worker
 spec:
   concurrency: 2 
   nodeSelector:
@@ -16,7 +16,7 @@ spec:
     image: rancher/k3s-upgrade
     args:
     - prepare
-    - k3s-plan-control-plane
+    - k3s-upgrade-control-plane
   cordon: true
   upgrade:
     image: rancher/k3s-upgrade
