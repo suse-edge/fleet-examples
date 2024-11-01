@@ -4,6 +4,6 @@ helm:
   releaseName: "neuvector"
   chart: "neuvector"
   repo: "https://charts.rancher.io"
-  version: "104.0.1+up2.7.9"
+  version: "104.0.2+up2.8.0"
   # custom chart value overrides
   values: {}
