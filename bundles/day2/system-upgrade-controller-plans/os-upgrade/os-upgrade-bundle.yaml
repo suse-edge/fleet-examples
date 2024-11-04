@@ -1,7 +1,7 @@
 kind: Bundle
 apiVersion: fleet.cattle.io/v1alpha1
 metadata:
-  name: os-upgrade-310
+  name: os-upgrade
   namespace: fleet-default
 spec:
   resources:
@@ -213,7 +213,7 @@ spec:
         EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
         SL_MICRO_ZYPPER_ID: "SL-Micro"
         SL_MICRO_VERSION: "6.0"
-    name: os-pkg-update-bundle.yaml
+    name: os-upgrade-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
   - clusterSelector: null
