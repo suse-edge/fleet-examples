@@ -1,7 +1,8 @@
+# Configurations for the operating system migration/upgrade workflow
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: os-upgrade-edge-310
+  name: os-upgrade-config
 data:
   EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
   SL_MICRO_ZYPPER_ID: "SL-Micro"

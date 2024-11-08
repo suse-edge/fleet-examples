@@ -6,11 +6,11 @@ metadata:
 spec:
   resources:
   - content: |
-      # control-plane upgrade plan
+      # SUC Plan related to upgrading the RKE2 version of control-plane nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: rke2-plan-control-plane
+        name: rke2-upgrade-control-plane
         namespace: cattle-system
         labels:
           rke2-upgrade: control-plane
@@ -37,14 +37,14 @@ spec:
           image: rancher/rke2-upgrade
         version: v1.30.3+rke2r1
       ---
-      # worker upgrade plan
+      # SUC Plan related to upgrading the RKE2 version of worker nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: rke2-plan-agent
+        name: rke2-upgrade-worker
         namespace: cattle-system
         labels:
-          rke2-upgrade: agent
+          rke2-upgrade: worker
       spec:
         concurrency: 2
         nodeSelector:
@@ -54,7 +54,7 @@ spec:
         prepare:
           args:
           - prepare
-          - rke2-plan-control-plane
+          - rke2-upgrade-control-plane
           image: rancher/rke2-upgrade
         serviceAccountName: system-upgrade-controller
         cordon: true

@@ -1,7 +1,8 @@
+# SUC Plan related to upgrading/migrating the operating system of control-plane nodes
 apiVersion: upgrade.cattle.io/v1
 kind: Plan
 metadata:
-  name: cp-os-upgrade-edge-310
+  name: os-upgrade-control-plane
 spec:
   concurrency: 1
   # Override the default SUC set value of 900 with something that will
@@ -24,14 +25,14 @@ spec:
     effect: "NoExecute"
   serviceAccountName: system-upgrade-controller
   secrets:
-    - name: os-upgrade-edge-310
-      path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+    - name: os-upgrade-script
+      path: /host/run/system-upgrade/secrets/os-upgrade-script
   cordon: true
   version: "3.1.0"
   upgrade:
     image: registry.suse.com/bci/bci-base:15.6
     command: ["chroot", "/host"]
-    args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+    args: ["sh", "/run/system-upgrade/secrets/os-upgrade-script/upgrade.sh"]
     envFrom:
     - configMapRef:
-        name: os-upgrade-edge-310
+        name: os-upgrade-config
