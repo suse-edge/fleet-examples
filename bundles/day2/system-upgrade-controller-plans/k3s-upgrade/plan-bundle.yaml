@@ -6,11 +6,11 @@ metadata:
 spec:
   resources:
   - content: |
-      # control-plane upgrade plan
+      # SUC Plan related to upgrading the K3s version of control-plane nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: k3s-plan-control-plane
+        name: k3s-upgrade-control-plane
         namespace: cattle-system
         labels:
           k3s-upgrade: control-plane
@@ -37,14 +37,14 @@ spec:
           image: rancher/k3s-upgrade
         version: v1.30.3+k3s1
       ---
-      # worker upgrade plan
+      # SUC Plan related to upgrading the K3s version of worker nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: k3s-plan-agent
+        name: k3s-upgrade-worker
         namespace: cattle-system
         labels:
-          k3s-upgrade: agent
+          k3s-upgrade: worker
       spec:
         concurrency: 2 
         nodeSelector:
@@ -56,7 +56,7 @@ spec:
           image: rancher/k3s-upgrade
           args:
           - prepare
-          - k3s-plan-control-plane
+          - k3s-upgrade-control-plane
         cordon: true
         upgrade:
           image: rancher/k3s-upgrade

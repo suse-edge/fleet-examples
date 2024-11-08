@@ -1,20 +1,21 @@
 kind: Bundle
 apiVersion: fleet.cattle.io/v1alpha1
 metadata:
-  name: os-upgrade-310
+  name: os-upgrade
   namespace: fleet-default
 spec:
   resources:
   - content: |
+      # SUC Plan related to upgrading/migrating the operating system of worker nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: agent-os-upgrade-edge-310
+        name: os-upgrade-worker
         namespace: cattle-system
       spec:
         concurrency: 1
         # Override default SUC set value of 900 with something that will
-        # give the enough time to the agent plan to finish 
+        # give the enough time to the worker plan to finish 
         jobActiveDeadlineSecs: 43200
         nodeSelector:
           matchExpressions:
@@ -22,8 +23,8 @@ spec:
             - {key: node-role.kubernetes.io/control-plane, operator: NotIn, values: ["true"]}
         serviceAccountName: system-upgrade-controller
         secrets:
-          - name: os-upgrade-edge-310
-            path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+          - name: os-upgrade-script
+            path: /host/run/system-upgrade/secrets/os-upgrade-script
         cordon: true
         version: "3.1.0"
         prepare:
@@ -41,7 +42,7 @@ spec:
                   if [ -n "$PLAN_APPLYING_CHECK" ]; then
                     echo "SUC has not yet cleared ${MASTER_PLAN} plan 'status.applying' list. Checking again in ${CHECK_INTERVAL} seconds..."
                   else
-                    echo "${MASTER_PLAN} control-plane upgrade has finished. Proceeding to agent node upgrade.."
+                    echo "${MASTER_PLAN} control-plane upgrade has finished. Proceeding to worker node upgrade.."
                     break
                   fi
                 fi
@@ -49,7 +50,7 @@ spec:
               done
           envs:
           - name: MASTER_PLAN
-            value: "cp-os-upgrade-edge-310"
+            value: "os-upgrade-control-plane"
           - name: NAMESPACE
             valueFrom:
               fieldRef:
@@ -57,15 +58,16 @@ spec:
         upgrade:
           image: registry.suse.com/bci/bci-base:15.6
           command: ["chroot", "/host"]
-          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-script/upgrade.sh"]
           envFrom:
           - configMapRef:
-              name: os-upgrade-edge-310
+              name: os-upgrade-config
       ---
+      # SUC Plan related to upgrading/migrating the operating system of control-plane nodes
       apiVersion: upgrade.cattle.io/v1
       kind: Plan
       metadata:
-        name: cp-os-upgrade-edge-310
+        name: os-upgrade-control-plane
         namespace: cattle-system
       spec:
         concurrency: 1
@@ -89,22 +91,24 @@ spec:
           effect: "NoExecute"
         serviceAccountName: system-upgrade-controller
         secrets:
-          - name: os-upgrade-edge-310
-            path: /host/run/system-upgrade/secrets/os-upgrade-edge-310
+          - name: os-upgrade-script
+            path: /host/run/system-upgrade/secrets/os-upgrade-script
         cordon: true
         version: "3.1.0"
         upgrade:
           image: registry.suse.com/bci/bci-base:15.6
           command: ["chroot", "/host"]
-          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-edge-310/upgrade.sh"]
+          args: ["sh", "/run/system-upgrade/secrets/os-upgrade-script/upgrade.sh"]
           envFrom:
           - configMapRef:
-              name: os-upgrade-edge-310
+              name: os-upgrade-config
       ---
+      # Secret containing the script that is used by the 
+      # SUC Plans for operating system migration/upgrade
       apiVersion: v1
       kind: Secret
       metadata:
-        name: os-upgrade-edge-310
+        name: os-upgrade-script
         namespace: cattle-system
       type: Opaque
       stringData:
@@ -199,16 +203,17 @@ spec:
 
           executeUpgrade
       ---
+      # Configurations for the operating system migration/upgrade workflow
       apiVersion: v1
       kind: ConfigMap
       metadata:
-        name: os-upgrade-edge-310
+        name: os-upgrade-config
         namespace: cattle-system
       data:
         EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
         SL_MICRO_ZYPPER_ID: "SL-Micro"
         SL_MICRO_VERSION: "6.0"
-    name: os-pkg-update-bundle.yaml
+    name: os-upgrade-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
   - clusterSelector: null
