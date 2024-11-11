@@ -25,4 +25,4 @@ spec:
   cordon: true
   upgrade:
     image: rancher/rke2-upgrade
-  version: v1.28.10+rke2r1
+  version: v1.28.13+rke2r1

@@ -4,5 +4,5 @@ edge/cdi-chart:0.3.0
 edge/endpoint-copier-operator-chart:0.2.0
 edge/kubevirt-chart:0.3.0
 edge/kubevirt-dashboard-extension-chart:1.0.0
-edge/metal3-chart:0.7.3
+edge/metal3-chart:0.7.4
 edge/metallb-chart:0.14.3
