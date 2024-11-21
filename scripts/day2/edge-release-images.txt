@@ -6,11 +6,8 @@ edge/3.2/akri-opcua-discovery-handler:v0.12.20
 edge/3.2/akri-udev-discovery-handler:v0.12.20
 edge/3.2/akri-webhook-configuration:v0.12.20
 edge/3.2/baremetal-operator:0.6.2
-edge/3.2/cluster-api-controller:v1.7.5
-edge/3.2/ip-address-manager:1.7.1
-edge/3.2/cluster-api-provider-metal3:v1.7.1
-edge/3.2/cluster-api-provider-rke2-bootstrap:0.7.1
-edge/3.2/cluster-api-provider-rke2-controlplane:0.7.1
+edge/3.2/ip-address-manager:1.7.2
+edge/3.2/cluster-api-provider-metal3:v1.7.2
 edge/3.2/edge-image-builder:1.1.0
 edge/3.2/endpoint-copier-operator:0.2.0
 edge/3.2/frr:8.4
