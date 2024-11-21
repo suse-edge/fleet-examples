@@ -2,7 +2,7 @@ defaultNamespace: metallb-system
 
 helm:
   releaseName: metallb
-  chart: "oci://registry.suse.com/edge/3.1/metallb-chart"
+  chart: "oci://registry.suse.com/edge/3.2/metallb-chart"
   version: "0.14.9"
   # custom chart value overrides
   values: {}
