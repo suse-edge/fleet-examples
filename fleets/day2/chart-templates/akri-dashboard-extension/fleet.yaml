@@ -3,6 +3,6 @@ defaultNamespace: cattle-ui-plugin-system
 helm:
   releaseName: akri-dashboard-extension
   chart: "oci://registry.suse.com/edge/3.2/akri-dashboard-extension-chart"
-  version: "1.1.0"
+  version: "302.0.0+up1.2.1"
   # custom chart value overrides
   values: {}

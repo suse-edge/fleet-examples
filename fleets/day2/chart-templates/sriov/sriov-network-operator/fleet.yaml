@@ -3,6 +3,6 @@ defaultNamespace: sriov-network-operator
 helm:
   releaseName: sriov-network-operator-chart
   chart: "oci://registry.suse.com/edge/3.2/sriov-network-operator-chart"
-  version: "1.3.0"
+  version: "302.0.0+up1.4.0"
   # custom chart value overrides
   values: {}
