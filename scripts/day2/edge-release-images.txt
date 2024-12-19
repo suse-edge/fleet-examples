@@ -6,8 +6,6 @@ edge/3.2/akri-opcua-discovery-handler:v0.12.20
 edge/3.2/akri-udev-discovery-handler:v0.12.20
 edge/3.2/akri-webhook-configuration:v0.12.20
 edge/3.2/baremetal-operator:0.8.0
-edge/3.2/ip-address-manager:1.7.2
-edge/3.2/cluster-api-provider-metal3:v1.7.2
 edge/3.2/edge-image-builder:1.1.0
 edge/3.2/endpoint-copier-operator:0.2.0
 edge/3.2/frr:8.4
@@ -32,6 +30,6 @@ suse/sles/15.6/virt-controller:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-api:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-exportproxy:1.3.1-150600.5.9.1
 suse/sles/15.6/virt-exportserver:1.3.1-150600.5.9.1
-edge/3.2/upgrade-controller:0.1.0
+edge/3.2/upgrade-controller:0.1.1
 edge/3.2/kubectl:1.30.3
-edge/3.2/release-manifest:3.1.1
+edge/3.2/release-manifest:3.2.0
