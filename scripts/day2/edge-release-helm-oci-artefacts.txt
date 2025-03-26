@@ -4,7 +4,7 @@ edge/3.2/cdi-chart:302.0.0+up0.4.0
 edge/3.2/endpoint-copier-operator-chart:302.0.0+up0.2.1
 edge/3.2/kubevirt-chart:302.0.0+up0.4.0
 edge/3.2/kubevirt-dashboard-extension-chart:302.0.0+up1.2.1
-edge/3.2/metal3-chart:302.0.0+up0.9.4
+edge/3.2/metal3-chart:302.0.1+up0.9.4
 edge/3.2/metallb-chart:302.0.1+up0.14.9
 edge/3.2/sriov-crd-chart:302.0.0+up1.4.0
 edge/3.2/sriov-network-operator-chart:302.0.0+up1.4.0
