@@ -4,6 +4,27 @@ helm:
   releaseName: "neuvector"
   chart: "neuvector"
   repo: "https://charts.rancher.io"
-  version: "105.0.0+up2.8.3"
+  version: "105.0.1+up2.8.4"
   # custom chart value overrides
   values: {}
+
+diff:
+  comparePatches:
+  - apiVersion: batch/v1
+    kind: CronJob
+    name: neuvector-cert-upgrader-pod
+    namespace: neuvector-system
+    operations:
+    - {"op":"remove", "path":"/metadata/annotations/cert-upgrader-uid"}
+  - apiVersion: coordination.k8s.io/v1
+    kind: Lease
+    name: neuvector-cert-upgrader
+    namespace: neuvector-system
+    operations:
+    - {"op":"remove", "path":"/spec/leaseTransitions"}
+  - apiVersion: coordination.k8s.io/v1
+    kind: Lease
+    name: neuvector-controller
+    namespace: neuvector-system
+    operations:
+    - {"op":"remove", "path":"/spec/leaseTransitions"}
