@@ -6,7 +6,7 @@ edge/3.2/akri-opcua-discovery-handler:v0.12.20
 edge/3.2/akri-udev-discovery-handler:v0.12.20
 edge/3.2/akri-webhook-configuration:v0.12.20
 edge/3.2/baremetal-operator:0.8.0
-edge/3.2/edge-image-builder:1.1.0.1
+edge/3.2/edge-image-builder:1.1.1
 edge/3.2/endpoint-copier-operator:0.2.0
 edge/3.2/frr:8.4
 edge/3.2/frr-k8s:v0.0.14
