@@ -2,8 +2,8 @@ defaultNamespace: kubevirt-system
 
 helm:
   releaseName: kubevirt
-  chart: "oci://registry.suse.com/edge/3.2/kubevirt-chart"
-  version: "302.0.0+up0.4.0"
+  chart: "oci://registry.suse.com/edge/charts/kubevirt"
+  version: "303.0.0+up0.5.0"
   # kubevirt namespace is created by kubevirt as well, we need to take ownership of it, otherwise it fails
   takeOwnership: true
   # custom chart value overrides

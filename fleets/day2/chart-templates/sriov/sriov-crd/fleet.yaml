@@ -1,8 +1,8 @@
 defaultNamespace: sriov-network-operator
 
 helm:
-  releaseName: sriov-crd-chart
-  chart: "oci://registry.suse.com/edge/3.2/sriov-crd-chart"
-  version: "302.0.0+up1.4.0"
+  releaseName: sriov-crd
+  chart: "oci://registry.suse.com/edge/charts/sriov-crd"
+  version: "303.0.2+up1.5.0"
   # custom chart value overrides
   values: {}
