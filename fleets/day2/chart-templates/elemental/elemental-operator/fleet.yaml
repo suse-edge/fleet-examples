@@ -3,7 +3,7 @@ defaultNamespace: cattle-elemental-system
 helm:
   releaseName: elemental-operator
   chart: "oci://registry.suse.com/rancher/elemental-operator-chart"
-  version: "1.6.5"
+  version: "1.6.8"
   # custom chart value overrides
   values: {}
 

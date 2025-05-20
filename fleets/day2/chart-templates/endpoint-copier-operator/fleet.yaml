@@ -2,7 +2,7 @@ defaultNamespace: endpoint-copier
 
 helm:
   releaseName: endpoint-copier-operator
-  chart: "oci://registry.suse.com/edge/3.2/endpoint-copier-operator-chart"
-  version: "302.0.0+up0.2.1"
+  chart: "oci://registry.suse.com/edge/3.3/endpoint-copier-operator"
+  version: "303.0.0+up0.2.1"
   # custom chart value overrides
   values: {}
