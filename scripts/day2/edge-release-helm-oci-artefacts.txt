@@ -1,5 +1,5 @@
 edge/charts/akri:303.0.0+up0.12.20
-edge/charts/akri-dashboard-extension:303.0.0+up1.2.1
+edge/charts/akri-dashboard-extension:303.0.2+up1.3.1
 edge/charts/cdi:303.0.0+up0.5.0
 edge/charts/endpoint-copier-operator:303.0.0+up0.2.1
 edge/charts/kubevirt:303.0.0+up0.5.0
