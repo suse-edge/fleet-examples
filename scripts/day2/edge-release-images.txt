@@ -5,14 +5,14 @@ edge/3.3/akri-onvif-discovery-handler:v0.12.20
 edge/3.3/akri-opcua-discovery-handler:v0.12.20
 edge/3.3/akri-udev-discovery-handler:v0.12.20
 edge/3.3/akri-webhook-configuration:v0.12.20
-edge/3.3/baremetal-operator:0.9.1
-edge/3.3/edge-image-builder:1.2.0
+edge/3.3/baremetal-operator:0.9.1.1
+edge/3.3/edge-image-builder:1.2.1
 edge/3.3/endpoint-copier-operator:0.2.0
 edge/3.3/frr:8.5.6
 edge/3.3/frr-k8s:v0.0.16
 edge/3.3/ironic:26.1.2.4
-edge/3.3/ironic-ipa-downloader:3.0.6
-edge/3.3/kube-rbac-proxy:0.18.2
+edge/3.3/ironic-ipa-downloader:3.0.7
+edge/3.3/kube-rbac-proxy:0.18.1
 edge/mariadb:10.6.15.1
 edge/3.3/metallb-controller:v0.14.9
 edge/3.3/metallb-speaker:v0.14.9
@@ -31,5 +31,5 @@ suse/sles/15.6/virt-api:1.4.0-150600.5.15.1
 suse/sles/15.6/virt-exportproxy:1.4.0-150600.5.15.1
 suse/sles/15.6/virt-exportserver:1.4.0-150600.5.15.1
 edge/3.3/upgrade-controller:0.1.1
-edge/3.3/kubectl:1.30.3
-edge/3.3/release-manifest:3.3.0
+edge/3.3/kubectl:1.32.4
+edge/3.3/release-manifest:3.3.1
