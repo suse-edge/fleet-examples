@@ -4,6 +4,6 @@ helm:
   releaseName: "longhorn-crd"
   chart: "longhorn-crd"
   repo: "https://charts.rancher.io/"
-  version: "106.2.0+up1.8.1"
+  version: "106.2.1+up1.8.2"
   # custom chart value overrides
   values: {}

@@ -3,7 +3,7 @@ defaultNamespace: rancher-turtles-system
 helm:
   releaseName: rancher-turtles
   chart: "oci://registry.suse.com/edge/charts/rancher-turtles"
-  version: "303.0.4+up0.20.0"
+  version: "303.0.5+up0.21.0"
   # custom chart value overrides
   values: {}
 
