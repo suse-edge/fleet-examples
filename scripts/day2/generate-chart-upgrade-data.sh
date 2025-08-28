@@ -108,10 +108,13 @@ for archive in "$archive_dir"/*.tgz; do
     # Construct the secret literal
     data_str="$chart_name|$chart_version|$base64_encoded_archive"
 
+    secret_file=$(mktemp)
+    echo -n "$data_str" > $secret_file
+
     # Create chart data secret in the 'eib-charts-upgrader' fleet
     secret_name=$(echo $archive_no_ext | tr '.' '-' | tr '+' '-')
     kubectl create secret generic $secret_name \
-    --from-literal=$secret_name.txt="$data_str" \
+    --from-file=$secret_name.txt=$secret_file \
     --dry-run=client -o yaml > $secrets_path/$secret_name.yaml
 
     # Add the script name to the 'eib-charts-upgrader' fleet secret kustomization.yaml
