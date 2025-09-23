@@ -17,9 +17,9 @@ spec:
     - name: os-upgrade-script
       path: /host/run/system-upgrade/secrets/os-upgrade-script
   cordon: true
-  version: "3.3.0"
+  version: "3.4.0"
   prepare:
-    image: registry.suse.com/edge/3.3/kubectl:1.30.3
+    image: registry.suse.com/edge/3.4/kubectl:1.33.4
     command: ["/bin/sh", "-c"]
     args:
       - |

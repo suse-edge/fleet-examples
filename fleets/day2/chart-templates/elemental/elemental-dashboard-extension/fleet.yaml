@@ -4,6 +4,6 @@ helm:
   releaseName: elemental
   chart: "elemental"
   repo: "https://github.com/rancher/ui-plugin-charts/raw/main"
-  version: "3.0.0"
+  version: "3.0.1"
   # custom chart value overrides
   values: {}
