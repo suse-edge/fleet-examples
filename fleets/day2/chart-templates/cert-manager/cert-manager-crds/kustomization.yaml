@@ -1,2 +1,2 @@
 resources:
-- https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.crds.yaml
+- https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.crds.yaml

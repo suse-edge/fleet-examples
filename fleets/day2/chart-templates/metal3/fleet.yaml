@@ -3,6 +3,6 @@ defaultNamespace: metal3-system
 helm:
   releaseName: metal3
   chart: "oci://registry.suse.com/edge/charts/metal3"
-  version: "303.0.5+up0.11.3"
+  version: "304.0.16+up0.12.6"
   # custom chart value overrides
   values: {}
