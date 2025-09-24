@@ -94,13 +94,13 @@ for archive in "$archive_dir"/*.tgz; do
     archive_no_ext=$(basename "$archive" .tgz)
 
     # Parse chart name from archive name
-    chart_name=$(echo $archive_no_ext | sed -E 's|-[0-9]+\.[0-9]+\.[0-9]+.*||')
+    chart_name=$(echo $archive_no_ext | sed -E 's|-v?[0-9]+\.[0-9]+\.[0-9]+.*||')
     if [[ $chart_name == *"$chart_suffix" ]]; then
         chart_name=${chart_name%$chart_suffix}
     fi
 
     # Parse chart version from archive name
-    chart_version=$(echo $archive_no_ext | sed -E 's|.*-([0-9]+\.[0-9]+\.[0-9]+.*)$|\1|')
+    chart_version=$(echo $archive_no_ext | sed -E 's|.*-(v?[0-9]+\.[0-9]+\.[0-9]+.*)$|\1|')
     
     # Encode the archive itself
     base64_encoded_archive=$(base64 $base64_option "$archive")
