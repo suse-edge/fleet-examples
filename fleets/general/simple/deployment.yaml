@@ -15,7 +15,7 @@ spec:
         app: hello-world-nginx
     spec:
       containers:
-      - image: nginx:latest
+      - image: registry.opensuse.org/opensuse/nginx:latest
         name: hello-world-nginx
         ports:
         - containerPort: 80
