@@ -4,7 +4,7 @@ metadata:
   name: system-upgrade-controller
   namespace: fleet-default
 spec:
-  revision: release-3.3.2
+  revision: release-3.3.3
   paths:
   - fleets/day2/system-upgrade-controller
   repo: https://github.com/suse-edge/fleet-examples.git
