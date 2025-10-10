@@ -4,7 +4,7 @@ helm:
   releaseName: "longhorn"
   chart: "longhorn"
   repo: "https://charts.rancher.io/"
-  version: "107.0.1+up1.9.1"
+  version: "107.1.0+up1.9.1"
   takeOwnership: true
   # custom chart value overrides
   values: {}
