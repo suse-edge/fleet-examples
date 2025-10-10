@@ -32,4 +32,4 @@ suse/sles/15.7/virt-exportproxy:1.5.2-150700.3.5.2
 suse/sles/15.7/virt-exportserver:1.5.2-150700.3.5.2
 edge/3.4/upgrade-controller:0.1.1
 edge/3.4/kubectl:1.33.4
-edge/3.4/release-manifest:3.4.0
+edge/3.4/release-manifest:3.4.1
