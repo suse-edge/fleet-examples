@@ -35,7 +35,7 @@ spec:
         cordon: true
         upgrade:
           image: rancher/k3s-upgrade
-        version: v1.30.11+k3s1
+        version: v1.30.14+k3s2
       ---
       # SUC Plan related to upgrading the K3s version of worker nodes
       apiVersion: upgrade.cattle.io/v1
@@ -60,7 +60,7 @@ spec:
         cordon: true
         upgrade:
           image: rancher/k3s-upgrade
-        version: v1.30.11+k3s1
+        version: v1.30.14+k3s2
     name: k3s-upgrade-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
