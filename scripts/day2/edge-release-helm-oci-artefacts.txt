@@ -4,10 +4,10 @@ edge/charts/cdi:304.0.1+up0.6.0
 edge/charts/endpoint-copier-operator:304.0.1+up0.3.0
 edge/charts/kubevirt:304.0.1+up0.6.0
 edge/charts/kubevirt-dashboard-extension:304.0.3+up1.3.2
-edge/charts/metal3:304.0.16+up0.12.6
+edge/charts/metal3:304.0.19+up0.12.9
 edge/charts/metallb:304.0.0+up0.14.9
 edge/charts/sriov-crd:304.0.2+up1.5.0
 edge/charts/sriov-network-operator:304.0.2+up1.5.0
-edge/charts/rancher-turtles:304.0.6+up0.24.0
-edge/charts/rancher-turtles-airgap-resources:304.0.6+up0.24.0
+edge/charts/rancher-turtles:304.0.7+up0.24.3
+edge/charts/rancher-turtles-airgap-resources:304.0.7+up0.24.3
 edge/charts/upgrade-controller:304.0.1+up0.1.1
