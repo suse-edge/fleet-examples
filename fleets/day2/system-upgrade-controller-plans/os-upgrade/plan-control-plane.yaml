@@ -28,7 +28,7 @@ spec:
     - name: os-upgrade-script
       path: /host/run/system-upgrade/secrets/os-upgrade-script
   cordon: true
-  version: "3.4.2"
+  version: "3.4.3"
   upgrade:
     image: registry.suse.com/bci/bci-base:15.6
     command: ["chroot", "/host"]

@@ -22,4 +22,4 @@ spec:
     force: true
   upgrade:
     image: rancher/rke2-upgrade
-  version: v1.33.5+rke2r1
+  version: v1.33.6+rke2r1
