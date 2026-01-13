@@ -148,7 +148,7 @@ spec:
                   FULLY_QUANTIFIED_PRODUCT=${SL_MICRO_ZYPPER_ID}/${SL_MICRO_VERSION}/${SYSTEM_ARCH}
 
                   PKG_UPDATE_CMD="ExecStart=/usr/sbin/transactional-update cleanup up"
-                  MIGRATION_CMD="ExecStart=/usr/sbin/transactional-update --continue run zypper migration --gpg-auto-import-keys --non-interactive --product ${FULLY_QUANTIFIED_PRODUCT} --root /"
+                  MIGRATION_CMD="ExecStart=/usr/sbin/transactional-update --continue migration --gpg-auto-import-keys --non-interactive --product ${FULLY_QUANTIFIED_PRODUCT}"
                   EXEC_START=$(echo -e "${PKG_UPDATE_CMD}\n${MIGRATION_CMD}")
 
                   SERVICE_NAME="os-migration.service"
