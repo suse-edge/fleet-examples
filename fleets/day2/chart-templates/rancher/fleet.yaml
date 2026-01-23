@@ -4,6 +4,6 @@ helm:
   releaseName: "rancher"
   chart: "rancher"
   repo: "https://charts.rancher.com/server-charts/prime"
-  version: "2.12.2"
+  version: "2.13.1"
   # custom chart value overrides
   values: {}

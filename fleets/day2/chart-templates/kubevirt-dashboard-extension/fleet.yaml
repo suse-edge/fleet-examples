@@ -3,6 +3,6 @@ defaultNamespace: cattle-ui-plugin-system
 helm:
   releaseName: kubevirt-dashboard-extension
   chart: "oci://registry.suse.com/edge/charts/kubevirt-dashboard-extension"
-  version: "304.0.3+up1.3.2"
+  version: "305.0.3+up1.3.2"
   # custom chart value overrides
   values: {}
