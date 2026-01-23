@@ -4,6 +4,6 @@ helm:
   releaseName: "neuvector-ui-ext"
   chart: "neuvector-ui-ext"
   repo: "https://github.com/rancher/ui-plugin-charts/raw/main/"
-  version: "2.1.3"
+  version: "2.1.5"
   # custom chart value overrides
   values: {}

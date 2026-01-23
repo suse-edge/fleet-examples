@@ -2,12 +2,15 @@ defaultNamespace: longhorn-system
 
 helm:
   releaseName: "longhorn"
-  chart: "longhorn"
-  repo: "https://charts.rancher.io/"
-  version: "107.1.0+up1.9.1"
+  chart: "suse-storage"
+  repo: "oci://dp.apps.rancher.io/charts"
+  version: "1.10.1"
   takeOwnership: true
   # custom chart value overrides
-  values: {}
+  values:
+    global:
+      imagePullSecrets:
+        - application-collection
 
 # https://fleet.rancher.io/bundle-diffs
 diff:

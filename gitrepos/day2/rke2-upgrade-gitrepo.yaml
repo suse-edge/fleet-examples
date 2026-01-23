@@ -4,7 +4,7 @@ metadata:
   name: rke2-upgrade
   namespace: fleet-default
 spec:
-  revision: release-3.4.1
+  revision: release-3.5.0
   paths:
   - fleets/day2/system-upgrade-controller-plans/rke2-upgrade
   repo: https://github.com/suse-edge/fleet-examples.git
