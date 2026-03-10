@@ -210,9 +210,9 @@ spec:
         name: os-upgrade-config
         namespace: cattle-system
       data:
-        EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.0"
+        EDGE_RELEASE_CPE: "cpe:/o:suse:sl-micro:6.1"
         SL_MICRO_ZYPPER_ID: "SL-Micro"
-        SL_MICRO_VERSION: "6.0"
+        SL_MICRO_VERSION: "6.1"
     name: os-upgrade-bundle.yaml
   targets:
   # Match nothing, user needs to specify targets
