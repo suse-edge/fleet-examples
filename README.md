@@ -6,12 +6,6 @@
 kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/simple-gitrepo.yaml
 ```
 
-* [Akri](./fleets/general/akri) - [Akri](https://github.com/project-akri/akri) via [SUSE Edge charts repository](https://suse-edge.github.io/charts/)
-
-```
-kubectl apply -f https://raw.githubusercontent.com/suse-edge/fleet-examples/main/gitrepos/general/akri-suse-edge-gitrepo.yaml
-```
-
 * [Kubevirt](./fleets/general/kubevirt) - [Kubevirt](https://github.com/kubevirt/kubevirt) via [SUSE Edge charts repository](https://suse-edge.github.io/charts/)
 
 ```
