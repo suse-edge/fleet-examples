@@ -4,7 +4,7 @@ helm:
   releaseName: "longhorn"
   chart: "suse-storage"
   repo: "oci://dp.apps.rancher.io/charts"
-  version: "1.11.2"
+  version: "1.11.3"
   takeOwnership: true
   # custom chart value overrides
   values:
