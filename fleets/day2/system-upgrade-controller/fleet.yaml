@@ -2,7 +2,7 @@ defaultNamespace: cattle-system
 helm:
   releaseName: system-upgrade-controller
   chart: "system-upgrade-controller"
-  version: "109.0.1"
+  version: "109.0.2"
   repo: "https://charts.rancher.io/"
   values:
     global:
