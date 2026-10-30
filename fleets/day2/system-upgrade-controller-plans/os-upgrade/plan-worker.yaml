@@ -19,7 +19,7 @@ spec:
   cordon: true
   version: "3.7.1"
   prepare:
-    image: registry.suse.com/edge/3.7/kubectl:1.36.3
+    image: registry.suse.com/edge/3.7/kubectl:1.36.5
     command: ["/bin/sh", "-c"]
     args:
       - |
