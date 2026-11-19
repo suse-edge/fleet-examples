@@ -6,5 +6,5 @@ edge/charts/metal3:306.0.31+up0.15.0
 edge/charts/metallb:306.0.2+up0.15.3
 edge/charts/sriov-crd:306.0.4+up1.6.0
 edge/charts/sriov-network-operator:306.0.4+up1.6.0
-edge/charts/rancher-turtles-providers:306.0.7+up0.26.2
+edge/charts/rancher-turtles-providers:306.0.8+up0.26.8
 edge/charts/upgrade-controller:306.0.5+up0.1.3
